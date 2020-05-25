@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>Hello World</title>
+        <!-- update the version number as needed -->
+        <script defer src="/__/firebase/7.1.0/firebase-app.js"></script>
+        <!-- include only the Firebase features as you need -->
+        <script defer src="/__/firebase/7.1.0/firebase-auth.js"></script>
+        <script defer src="/__/firebase/7.1.0/firebase-database.js"></script>
+        <script defer src="/__/firebase/7.1.0/firebase-messaging.js"></script>
+        <script defer src="/__/firebase/7.1.0/firebase-storage.js"></script>
+        <!-- initialize the SDK after all desired features are loaded -->
+        <script defer src="/__/firebase/init.js"></script>
+    </head>
+    <body onload="pageLogin();">
+        <div id="main">
+            
+        </div>
+
+        <template id="templateLogin">
+            <button onclick="googleLogin()">
+                Login with Google
+            </button>
+        </template>
+
+        <template id="templateHome">
+            <a>Primeiro template</a>
+        </template>
+
+        <template id="templateCadastro">
+            <form>
+                <input type="text" placeholder="titulo" id="insertTit">
+                <input type="text" placeholder="autor" id="insertAut">
+                <button onclick="addLivro();">+</button>
+            </form> 
+        </template>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-analytics.js"></script>
+
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDq9e8kqTReOKqiTb67cf4J8JAjT8dWyKk",
+            authDomain: "ceos-app-2f767.firebaseapp.com",
+            databaseURL: "https://ceos-app-2f767.firebaseio.com",
+            projectId: "ceos-app-2f767",
+            storageBucket: "",
+            messagingSenderId: "823407568944",
+            appId: "1:823407568944:web:64f11b68cc21f38513a5f5",
+            measurementId: "G-2ZL6SNV6Q2"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        </script>
+    </body>
+</html>

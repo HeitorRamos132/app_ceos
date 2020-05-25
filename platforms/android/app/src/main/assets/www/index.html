@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width,
+            viewport-fit=cover">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>CÉOS</title>
+    </head>
+    <body>
+        <div class="menuinativo" id="buscafixo">
+            <div id="divBusca">
+                <input type="text" style="text-align: start" id="txtBusca"
+                placeholder="Buscar..." oninput="buscar()"/>
+                <img src="img/LUPA.svg" />
+                <div id="resultadoBusca"></div>
+            </div>
+        </div>
+        <div id="main">
+
+        </div>
+        <footer class="footer-inativo" id="rodape">
+            <button><img src="img/HOME.svg" onclick="trocaPagina('home')"></button>
+            <button><img src="img/SALVO_CINZA.svg" onclick="trocaPagina('salvos')"></button>
+            <button><img src="img/CAT_CINZA.svg" onclick="trocaPagina('categoria')"></button>
+            <button><img src="img/CAD_CINZA.svg" onclick="trocaPagina('cadastro')"></button>
+        </footer>
+
+        <template id="template-login">
+            <div class="login">
+                <img id="logoLogin" src="img/LOGO.svg" alt="Logo do app CEOS">
+                <img id="tipoLogin" src="img/TIPO_NOVA.png" alt="">
+
+                <div class="form">
+                    <input id="email" type="text"
+                        placeholder="exemplo@exemplo.com" required/>
+                        <p></p>
+                    <p>
+                    <input id="senha" type="password" placeholder="digite sua senha" required/>
+                    <img src="img/eye.svg" class="olho" id="olho" onclick="mostraSenha();">
+                    </p>
+                    <p>
+                    <input id="senha2" type="password" placeholder="confirme sua senha" required/>
+                    </p>
+                    <p id="errouemail"></p>
+                    <a id="criauser"><button onclick="formcriar();">Criar usuário</button></a>
+                    <a id="entraruser"><button onclick="entrar();">Entrar</button></a>
+                    <a id="voltaentrar"><button onclick="trocaPagina('login');">Voltar</button></a>
+                    <p onclick="esqueciSenha();">Esqueci minha senha</p>
+                </div>
+            </div>
+        
+        </template>
+
+        <template id="template-home">
+            <div id="guriaHome">
+                    <img src="img/guria2.svg">
+                </div>
+                <div class="conteudoHome">
+                    <h3>INDICAÇÕES</h3>
+                    
+                    <div id="top">
+                    
+                    </div>
+                    <div id="resultado"></div>
+                </div>
+                </div>
+        </template>
+
+        <template id="template-salvos">
+            <div id="conteudoSalvos" class="conteudoSalvos">
+
+            </div>
+        </template>
+
+        <template id="template-categoria">
+            <div class="categorias" id="livrosCategoria">
+                <div class="categoriasIcones">
+                <img src="img/PROG.png" onclick="categoriaLivros('Programação')">
+                <img src="img/DESIGN.png" onclick="categoriaLivros('Design')">
+                <img src="img/AUDIOV.png" onclick="categoriaLivros('Audiovisual')">
+                <img src="img/LING.png" onclick="categoriaLivros('Linguagens')">
+                <img src="img/LIT.png" onclick="categoriaLivros('Literatura')">
+                <img src="img/OUTROS.png" onclick="categoriaLivros('Outros')">
+                </div>
+            </div>
+        </template>
+
+        <template id="template-cadastro">
+            <div class="cadastroLivroNovo">
+                <img src="img/guria.svg" id="guria">
+            <h3>CADASTRE UM LIVRO</h3>
+            <input type="text" placeholder="titulo" id="insertTit">
+            <input type="text" placeholder="subtítulo" id="insertSub">
+            <input type="text" placeholder="autor" id="insertAut">
+            <select id="insertCat">
+                <option value="selectCat">Selecione uma categoria</option>
+                <option value="Programação">Programação</option>
+                <option value="Design">Design</option>
+                <option value="Línguas">Linguagens</option>
+                <option value="Audiovisual">Audiovisual</option>
+                <option value="Literatura">Literatura</option>
+                <option value="Outros">Outros</option>
+            </select>
+            <input type="hidden" value="none" id="insertCat">
+            <input type="text" placeholder="descrição" id="insertDesc">
+            <p><img src="img/ADDLIVRO.svg" onclick="addLivro();"></p>
+            <p id="resultCadastro"></p>  
+            </div>
+        </template>
+
+        <template id="template-resultado">
+            <div class="conteudoResultado">
+                
+            </div>
+        </template>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script
+            src="https://www.gstatic.com/firebasejs/7.1.0/firebase-analytics.js"></script>
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDq9e8kqTReOKqiTb67cf4J8JAjT8dWyKk",
+            authDomain: "ceos-app-2f767.firebaseapp.com",
+            databaseURL: "https://ceos-app-2f767.firebaseio.com",
+            projectId: "ceos-app-2f767",
+            storageBucket: "ceos-app-2f767.appspot.com",
+            messagingSenderId: "823407568944",
+            appId: "1:823407568944:web:64f11b68cc21f38513a5f5",
+            measurementId: "G-2ZL6SNV6Q2"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        </script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+        <script>
+          const auth = firebase.auth();
+          const db = firebase.firestore();
+        </script>
+    </body>
+</html>
