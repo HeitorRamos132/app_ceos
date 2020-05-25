@@ -7,12 +7,17 @@ function executaAcao() {
 //troca de páginas
 function trocaPagina (page) {
   var pagina = page;
+  //limpa o campo de busca
   document.getElementById('txtBusca').value = '';
+
+  //seleciona e exibe o template
   console.log('template-'+page)
   var elementoAtual = document.getElementById("template-"+page);
   var template = document.importNode(elementoAtual.content, true);
   document.getElementById("main").innerHTML = "";
   document.getElementById("main").appendChild(template);
+
+  //executa qualquer fução específica para página
   if (pagina == "login") {
     var emailAtual = localStorage.getItem('emailAtual');
     document.getElementById('email').value = emailAtual;
@@ -26,6 +31,7 @@ function trocaPagina (page) {
 //adiciona livros ao Firebase
 
 function addLivro() {
+  //sanitiza os campos
   var titulo = document.getElementById("insertTit").value;
   var tituloLimpo = titulo.replace(/&|<|>|"/g, "&amp;");
   var subtitulo = document.getElementById("insertSub").value;
@@ -36,6 +42,8 @@ function addLivro() {
   var categoriaLimpa = categoria.replace(/&|<|>|"/g, "&amp;");
   var descricao = document.getElementById("insertDesc").value;
   var descricaoLimpa = descricao.replace(/&|<|>|"/g, "&amp;");
+
+  //adiciona o livro ao firebase
   db.collection('livros').doc().set({
     titulo: tituloLimpo,
     subtitulo: subtituloLimpo,
@@ -60,18 +68,20 @@ function categoriaLivros(categoria){
 
   referencia.where('categoria', '==', categoria).where('banido', '==', false).orderBy('titulo').get().then(function(colecao){
     for (var msg of colecao.docs) {
+      //corta o título do livro para caber na capa
       var tituloVelho = msg.data().titulo;
       if (tituloVelho.length > 20) {
         var titulo = tituloVelho.substr(0,20)+'...';
       } else {
         var titulo = tituloVelho;
       }
+      //corta o subtitulo para caber na capa
       var subtitulo = msg.data().subtitulo;
       console.log(subtitulo);
       if (subtitulo.length > 17) {
-        console.log('grande');
         subtitulo = subtitulo.substr(0,17)+'...';
       }
+      //substitui a nota caso o livro não tenha nenhuma avaliação
       var nota = msg.data().avaliaTot;
       if (nota == null) {
         nota = 's/n'
@@ -95,7 +105,6 @@ function categoriaLivros(categoria){
 //abre o livro detalhado
 function abreLivro(id) {
   
-  console.log(id);
   var docRef = db.collection('livros');
   document.getElementById("main").innerHTML = "";
   docRef.doc(id).get().then(function(doc){
@@ -103,9 +112,11 @@ function abreLivro(id) {
     if (nota == null) {
       nota = 'Sem nota'
     }
+    //encurta a nota caso seja muito longa
     if (nota.lenght > 3){
       nota = nota.toFixed(1);
     }
+    //diminui a descrição
     var descricao = doc.data().descricao;
     if (descricao.length > 240) {
       descricao = descricao.substr(0,240)+'...';
@@ -171,14 +182,18 @@ function formcriar() {
 
 //criação de usuário
 function criar() {
+  //sanitiza os campos
   const email = document.getElementById("email").value;
   var emailLimpo = email.replace(/&|<|>|"/g, "&amp;");
   const senha = document.getElementById("senha").value;
   var senhaLimpa = senha.replace(/&|<|>|"/g, "&amp;");
   const senha2 = document.getElementById("senha2").value;
   var senha2Limpa = senha2.replace(/&|<|>|"/g, "&amp;");
+  
   var favoritos = [];
   var denunciados = [];
+  
+  //verifica se o email digitado pertence ao IFSC
   if (emailLimpo.includes('ifsc')) {
     if (senhaLimpa == senha2Limpa) {
       auth.createUserWithEmailAndPassword(email, senha).then(cred => {
@@ -266,7 +281,6 @@ function mostraSenha() {
 
 //carrega os dois livros mais bem colocados pra página inicial
 function carregaTop(){
-  console.log('bora');
   var docRef = db.collection('livros');
   document.getElementById('top').innerHTML = "";
   docRef.where('banido', '==', false).orderBy('avaliaTot', 'desc').limit(2).get().then(function(doc){
@@ -294,7 +308,6 @@ function carregaTop(){
         </div>
         <p id="salvarH" onclick="salva('${msg.id}')">SALVAR</id>
       </div>`
-      //<p id="categoriaH">${msg.data().categoria}</p>
     }
   })
 }
